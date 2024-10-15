@@ -1,0 +1,15 @@
+graph TD
+A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
+B --> C{CPF/CNPJ Válido?}
+C -- Sim --> D[Verificar Bad List]
+C -- Não --> X[CPF/CNPJ Inválido - Encerrar]
+D --> E{Documento na Bad List?}
+E -- Sim --> Y[Documento Não Elegível - Encerrar]
+E -- Não --> F[Verificar Duplicidade]
+F --> G{Excedeu o Limite de Solicitações?}
+G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
+G -- Não --> I[Prosseguir com a Abertura do Ticket]
+X --> A
+Y --> A
+Z --> A
+I --> J[Fim do Fluxo] 
