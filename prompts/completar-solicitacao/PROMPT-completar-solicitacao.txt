@@ -39,6 +39,12 @@ ORIENTAÇÕES:
 1. Fique à vontade para dizer que não sabe do que se trata algum conteúdo.
 2. Esteja baseado nos conteúdos oficiais.
 3. Não escreva algo que não tenha certeza.
+4. Explicitar essa etapa "I --> H[Completar Solicitação]" step by step.
+    4.1. Preencher o número do documento do cliente.
+    4.2. Preencher o sistema de origem e a data.
+    4.3. Chamar (realizar um request) para o sistema Power Curve (PCO) que retornará um reason code.
+    4.4. A partir do retorno do PCO, definir o tipo de solicitação
+    4.5. Mediante o tipo de solicitação será disponibilizado em tela quais documentos obrigatórios devem ser anexados
 
 -----------------------------------------------------------------------------------------------------------------------------
 MODELO BASE
@@ -54,10 +60,13 @@ E -- Não --> F[Verificar Duplicidade]
 F --> G{Excedeu o Limite de Solicitações?}
 G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
 G -- Não --> I[Prosseguir com a Abertura do Ticket]
+I --> H[Completar Solicitação]
+H --> K[Mandar Request para PCO]
+K --> L[Receber Reason Code]
+L --> J[Fim do Fluxo]
 X --> A
 Y --> A
-Z --> A
-I --> J[Fim do Fluxo] 
+Z --> A 
 """
 -----------------------------------------------------------------------------------------------------------------------------
 NOVO FLUXO: COMPLETAR SOLICITAÇÃO
@@ -69,6 +78,32 @@ A etapa de "COMPLETAR SOLICITAÇÃO" consiste nos seguintes passos:
 
 -----------------------------------------------------------------------------------------------------------------------------
 PROMPT:
-Com base na PERSONA fornecida, preciso que crie o diagrama do NOVO FLUXO: COMPLETAR SOLICITAÇÃO a partir do MODELO BASE. Seu dever é incrementar 
-o NOVO FLUXO: COMPLETAR SOLICITAÇÃO ao MODELO BASE e gerar um novo diagrama em um formato que a ferramenta Mermaid seja capaz de interpretar com 
-o máximo de detalhamento e seguindo as ORIENTAÇÕES.
+Com base na PERSONA fornecida, preciso que ajuste o diagrama do NOVO FLUXO: COMPLETAR SOLICITAÇÃO a partir do MODELO BASE. Seu dever é ajustar 
+as etapas do processo do NOVO FLUXO: COMPLETAR SOLICITAÇÃO de acordo com o MODELO BASE e gerar um novo diagrama em um formato que a ferramenta 
+Mermaid seja capaz de interpretar com o máximo de detalhamento e seguindo as ORIENTAÇÕES.
+
+----------------
+
+
+graph TD
+A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
+B --> C{CPF/CNPJ Válido?}
+C -- Sim --> D[Verificar Bad List]
+C -- Não --> X[CPF/CNPJ Inválido - Encerrar]
+D --> E{Documento na Bad List?}
+E -- Sim --> Y[Documento Não Elegível - Encerrar]
+E -- Não --> F[Verificar Duplicidade]
+F --> G{Excedeu o Limite de Solicitações?}
+G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
+G -- Não --> I[Prosseguir com a Abertura do Ticket]
+I --> H[Completar Solicitação]
+H --> H1[Preencher número do documento]
+H1 --> H2[Preencher sistema de origem e data]
+H2 --> H3[Request para Power Curve]
+H3 --> H4[Receber reason code]
+H4 --> H5[Definir tipo de solicitação]
+H5 --> H6[Disponibilizar documentos obrigatórios]
+H6 --> J[Fim do Fluxo]
+X --> A
+Y --> A
+Z --> A
