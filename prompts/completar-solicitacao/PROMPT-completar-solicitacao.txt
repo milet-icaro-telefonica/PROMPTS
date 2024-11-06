@@ -60,16 +60,15 @@ Z --> A
 I --> J[Fim do Fluxo] 
 """
 -----------------------------------------------------------------------------------------------------------------------------
-
+NOVO FLUXO: COMPLETAR SOLICITAÇÃO
 """
 A etapa de "COMPLETAR SOLICITAÇÃO" consiste nos seguintes passos:
-1. Verificar qual CRM está fazendo uma solicitação de cliente
-	1.1 Siebel
-	1.2 Next
+1. A partir do número do documento do cliente mais o sistema de origem e a data, mandar um request para o sistema Power Curve
+(PCO) que retornará um reason code.
 """
 
 -----------------------------------------------------------------------------------------------------------------------------
 PROMPT:
 Com base na PERSONA fornecida, preciso que crie o diagrama do NOVO FLUXO: COMPLETAR SOLICITAÇÃO a partir do MODELO BASE. Seu dever é incrementar 
-o NOVO FLUXO ao MODELO BASE e gerar um novo diagrama em um formato que a ferramenta Mermaid seja capaz de interpretar com o máximo de detalhamento 
-e seguindo as ORIENTAÇÕES.
+o NOVO FLUXO: COMPLETAR SOLICITAÇÃO ao MODELO BASE e gerar um novo diagrama em um formato que a ferramenta Mermaid seja capaz de interpretar com 
+o máximo de detalhamento e seguindo as ORIENTAÇÕES.
