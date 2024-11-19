@@ -33,58 +33,9 @@ e a linguagem Gherkin para criar histórias de usuários e cenários de teste de
 Linguagem e Tom: Carlos mantém um tom profissional e assertivo, utilizando uma linguagem técnica precisa e acessível, 
 evitando jargões para garantir a compreensão de todos os membros da equipe.
 """
-
------------------------------------------------------------------------------------------------------------------------------
-ORIENTAÇÕES:
-1. Fique à vontade para dizer que não sabe do que se trata algum conteúdo.
-2. Esteja baseado nos conteúdos oficiais.
-3. Não escreva algo que não tenha certeza.
-4. Explicitar essa etapa "I --> H[Completar Solicitação]" step by step.
-    4.1. Preencher o número do documento do cliente.
-    4.2. Preencher o sistema de origem e a data.
-    4.3. Chamar (realizar um request) para o sistema Power Curve (PCO) que retornará um reason code.
-    4.4. A partir do retorno do PCO, definir o tipo de solicitação
-    4.5. Mediante o tipo de solicitação será disponibilizado em tela quais documentos obrigatórios devem ser anexados
-
 -----------------------------------------------------------------------------------------------------------------------------
 MODELO BASE
 """
-graph TD
-A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
-B --> C{CPF/CNPJ Válido?}
-C -- Sim --> D[Verificar Bad List]
-C -- Não --> X[CPF/CNPJ Inválido - Encerrar]
-D --> E{Documento na Bad List?}
-E -- Sim --> Y[Documento Não Elegível - Encerrar]
-E -- Não --> F[Verificar Duplicidade]
-F --> G{Excedeu o Limite de Solicitações?}
-G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
-G -- Não --> I[Prosseguir com a Abertura do Ticket]
-I --> H[Completar Solicitação]
-H --> K[Mandar Request para PCO]
-K --> L[Receber Reason Code]
-L --> J[Fim do Fluxo]
-X --> A
-Y --> A
-Z --> A 
-"""
------------------------------------------------------------------------------------------------------------------------------
-NOVO FLUXO: COMPLETAR SOLICITAÇÃO
-"""
-A etapa de "COMPLETAR SOLICITAÇÃO" consiste nos seguintes passos:
-1. A partir do número do documento do cliente mais o sistema de origem e a data, mandar um request para o sistema Power Curve
-(PCO) que retornará um reason code.
-"""
-
------------------------------------------------------------------------------------------------------------------------------
-PROMPT:
-Com base na PERSONA fornecida, preciso que ajuste o diagrama do NOVO FLUXO: COMPLETAR SOLICITAÇÃO a partir do MODELO BASE. Seu dever é ajustar 
-as etapas do processo do NOVO FLUXO: COMPLETAR SOLICITAÇÃO de acordo com o MODELO BASE e gerar um novo diagrama em um formato que a ferramenta 
-Mermaid seja capaz de interpretar com o máximo de detalhamento e seguindo as ORIENTAÇÕES.
-
-----------------
-
-
 graph TD
 A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
 B --> C{CPF/CNPJ Válido?}
@@ -107,3 +58,34 @@ H6 --> J[Fim do Fluxo]
 X --> A
 Y --> A
 Z --> A
+"""
+-----------------------------------------------------------------------------------------------------------------------------
+ORIENTAÇÕES:
+1. Fique à vontade para dizer que não sabe do que se trata algum conteúdo.
+2. Esteja baseado nos conteúdos oficiais.
+3. Não escreva algo que não tenha certeza.
+4. Explicitar essa etapa "I --> H[Completar Solicitação]" step by step.
+    4.1. Preencher o número do documento do cliente.
+    4.2. Preencher o sistema de origem e a data.
+    4.3. Chamar (realizar um request) para o sistema Power Curve (PCO) que retornará um reason code.
+    4.4. A partir do retorno do PCO, definir o tipo de solicitação
+    4.5. Mediante o tipo de solicitação será disponibilizado em tela quais documentos obrigatórios devem ser anexados
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+NOVO FLUXO: COMPLETAR SOLICITAÇÃO
+"""
+A etapa de "COMPLETAR SOLICITAÇÃO" consiste nos seguintes passos:
+1. A partir do número do documento do cliente mais o sistema de origem e a data, mandar um request para o sistema Power Curve
+(PCO) que retornará um reason code.
+2. A partir da etapa "H3 --> H4[Receber reason code]" é necessário identificar na matriz Reason Code vs Tipo de Solicitação quais são 
+os tipos de solicitação que serão disponibilizados no formulário para seleção
+3. A partir da seleção do tipo de solicitação, será enviado um link via CSS/GEDOC (sistemas externos) para que o cliente final anexe os documentos
+obrigatórios.
+"""
+-----------------------------------------------------------------------------------------------------------------------------
+PROMPT:
+Com base na PERSONA fornecida, preciso que ajuste o diagrama do NOVO FLUXO: COMPLETAR SOLICITAÇÃO a partir do MODELO BASE. Seu dever é ajustar 
+as etapas do processo do NOVO FLUXO: COMPLETAR SOLICITAÇÃO de acordo com o MODELO BASE e gerar um novo diagrama em um formato que a ferramenta 
+Mermaid seja capaz de interpretar com o máximo de detalhamento e seguindo as ORIENTAÇÕES.
+
