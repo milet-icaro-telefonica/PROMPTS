@@ -37,27 +37,40 @@ evitando jargões para garantir a compreensão de todos os membros da equipe.
 MODELO BASE
 """
 graph TD
-A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
-B --> C{CPF/CNPJ Válido?}
-C -- Sim --> D[Verificar Bad List]
-C -- Não --> X[CPF/CNPJ Inválido - Encerrar]
-D --> E{Documento na Bad List?}
-E -- Sim --> Y[Documento Não Elegível - Encerrar]
-E -- Não --> F[Verificar Duplicidade]
-F --> G{Excedeu o Limite de Solicitações?}
-G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
-G -- Não --> I[Prosseguir com a Abertura do Ticket]
-I --> H[Completar Solicitação]
-H --> H1[Preencher número do documento]
-H1 --> H2[Preencher sistema de origem e data]
-H2 --> H3[Request para Power Curve]
-H3 --> H4[Receber reason code]
-H4 --> H5[Definir tipo de solicitação]
-H5 --> H6[Disponibilizar documentos obrigatórios]
-H6 --> J[Fim do Fluxo]
-X --> A
-Y --> A
-Z --> A
+    A[Iniciar Fluxo] --> B[Inserir CPF/CNPJ]
+    B --> C{CPF/CNPJ Válido?}
+    C -- Sim --> D[Verificar Bad List]
+    C -- Não --> X[CPF/CNPJ Inválido - Encerrar]
+    D --> E{Documento na Bad List?}
+    E -- Sim --> Y[Documento Não Elegível - Encerrar]
+    E -- Não --> F[Verificar Duplicidade]
+    F --> G{Excedeu o Limite de Solicitações?}
+    G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
+    G -- Não --> I[Prosseguir com a Abertura do Ticket]
+    I --> H[Completar Solicitação]
+    H --> H1[Preencher número do documento]
+    H1 --> H2[Preencher sistema de origem, produto e movimento]
+    H2 --> H3[Request para Power Curve]
+    H3 --> H4[Receber reason code]
+    H4 --> H5[Definir tipo de solicitação]
+    H5 --> H6[Disponibilizar documentos obrigatórios]
+    H6 --> H7{Todos os documentos anexados?}
+    H7 -- Não --> H5
+    H7 -- Sim --> K[Iniciar Análise de Pedido]
+    
+    %% Novo Fluxo: Análise Pedido Exceção
+    K --> L[ID do Chamado aparece na lista do analista]
+    L --> M{Início do SLA}
+    M --> N[Analista apropria-se do ID do Chamado]
+    N --> O{Tomar Decisão}
+    O -- Seguir sem o uso da calculadora de ofertas 
+    O -- Seguir utilizando a calculadora de ofertas --> Q[Utilizar Calculadora de Ofertas]
+   
+
+    %% Conexões de encerramento
+    X --> A
+    Y --> A
+    Z --> A
 """
 -----------------------------------------------------------------------------------------------------------------------------
 ORIENTAÇÕES:
@@ -75,8 +88,11 @@ NOVO FLUXO: ANALISE PEDIDO EXCECAO
 2. O analista irá se apropriar desse id(ticket) e começar as análises.
     2.1 Ele precisa tomar uma decisão nesse momento
         2.1.1 Seguir sem o uso da calculadora de ofertas
-        2.1.2 SeguiR utilizando a calculadora de ofertas
-            2.1.1.1 FIM
+        2.1.2 Seguir utilizando a calculadora de ofertas
+3. Tomada de decisão a partir 2.1.1 ou 2.1.2
+    3.1 Baseado no resultado da análise o analista de credito poderá aprovar, reprovar, derivar para uma alçada superior, identificar um sistema 
+    inoperante ou identificar uma pendência comercial. 
+
 """
 -----------------------------------------------------------------------------------------------------------------------------
 PROMPT:

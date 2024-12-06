@@ -19,17 +19,31 @@ graph TD
     H6 --> H7{Todos os documentos anexados?}
     H7 -- Não --> H5
     H7 -- Sim --> K[Iniciar Análise de Pedido]
-    
+
     %% Novo Fluxo: Análise Pedido Exceção
     K --> L[ID do Chamado aparece na lista do analista]
     L --> M{Início do SLA}
     M --> N[Analista apropria-se do ID do Chamado]
     N --> O{Tomar Decisão}
-    O -- Seguir sem o uso da calculadora de ofertas --> P[Fim da Análise]
+    O -- Seguir sem o uso da calculadora de ofertas --> P[Análise Sem Calculadora]
     O -- Seguir utilizando a calculadora de ofertas --> Q[Utilizar Calculadora de Ofertas]
-    Q --> R[Fim da Análise]
+    
+    %% Decisão após a análise
+    P --> R{Resultado da Análise}
+    Q --> R
+    
+    R -- Aprovar --> S[Aprovação do Pedido]
+    R -- Reprovar --> T[Rejeição do Pedido]
+    R -- Derivar para alçada superior --> U[Encaminhar para Alçada Superior]
+    R -- Identificar sistema inoperante --> V[Identificar Sistema Inoperante]
+    R -- Identificar pendência comercial --> W[Identificar Pendência Comercial]
 
     %% Conexões de encerramento
     X --> A
     Y --> A
     Z --> A
+    S --> A
+    T --> A
+    U --> A
+    V --> A
+    W --> A
