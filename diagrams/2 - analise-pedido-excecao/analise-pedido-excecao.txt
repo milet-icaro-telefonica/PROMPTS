@@ -8,10 +8,7 @@ graph TD
     E -- Não --> F[Verificar Duplicidade]
     F --> G{Excedeu o Limite de Solicitações?}
     G -- Sim --> Z[Excedeu o Limite de Solicitações - Encerrar]
-    G -- Não --> I[Prosseguir com a Abertura do Ticket]
-    I --> H[Completar Solicitação]
-    H --> H1[Preencher número do documento]
-    H1 --> H2[Preencher sistema de origem, produto e movimento]
+    G -- Não --> H2[Preencher sistema de origem, produto e movimento]
     H2 --> H3[Request para Power Curve]
     H3 --> H4[Receber reason code]
     H4 --> H5[Definir tipo de solicitação]
@@ -19,7 +16,7 @@ graph TD
     H6 --> H7{Todos os documentos anexados?}
     H7 -- Não --> H5
     H7 -- Sim --> K[Iniciar Análise de Pedido]
-
+    
     %% Novo Fluxo: Análise Pedido Exceção
     K --> L[ID do Chamado aparece na lista do analista]
     L --> M{Início do SLA}
@@ -37,7 +34,7 @@ graph TD
     R -- Derivar para alçada superior --> U[Encaminhar para Alçada Superior]
     R -- Identificar sistema inoperante --> V[Identificar Sistema Inoperante]
     R -- Identificar pendência comercial --> W[Identificar Pendência Comercial]
-
+    
     %% Conexões de encerramento
     X --> A
     Y --> A
